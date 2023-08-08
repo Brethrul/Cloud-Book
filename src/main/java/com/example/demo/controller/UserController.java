@@ -23,10 +23,11 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public User registerUser(@RequestBody RegistrationRequest request) {
+    public String registerUser(@RequestBody RegistrationRequest request) {
         // 调用 UserService 的注册方法进行用户注册
         try {
-            return userService.registerUser(request);
+            userService.registerUser(request);
+            return "OK";
         } catch (UserRegistrationException ex) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
         }
