@@ -25,11 +25,14 @@ public class User {
     private LocalDateTime lastAccessed;
 
     @Column(name = "status")
-    private int status;
+    private int status;//状态: 1(Enable) 0(Disable)
+    @Column(name = "display_name")
+    private String display_name;
 
-    public User(String username, String password) {//注册时候用的构造函数
+    public User(String username, String password,String display_name) {//注册时候用的构造函数
         this.username = username;
         this.password = password;
+        this.display_name = display_name;
         this.createdOn = LocalDateTime.now();
         this.status = 1;
         this.lastAccessed = LocalDateTime.now();
@@ -83,5 +86,13 @@ public class User {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getDisplay_name() {
+        return display_name;
+    }
+
+    public void setDisplay_name(String display_name) {
+        this.display_name = display_name;
     }
 }

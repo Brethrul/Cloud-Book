@@ -16,18 +16,22 @@ public class RegistrationRequest {
     @Column(name = "user_password")
     private String password;
 
+    @Column(name = "display_name")
+    private String displayname;
     @Column(name = "created_on", nullable = false, updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdOn;
-    @Column(name = "status")//注册请求的状态: 0 new,1 processing,2 processed
+    @Column(name = "status")//注册请求的状态: 0 new,1 success,2 fail
     private int status;
+
     // 构造函数
     public RegistrationRequest() {
     }
 
     // 带参数的构造函数
-    public RegistrationRequest(String username, String password) {
+    public RegistrationRequest(String username, String password,String display_name) {
         this.username = username;
         this.password = password;
+        this.displayname = display_name;
     }
 
     // Getter 和 Setter 方法
@@ -69,6 +73,14 @@ public class RegistrationRequest {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getDisplay_name() {
+        return displayname;
+    }
+
+    public void setDisplay_name(String display_name) {
+        this.displayname = display_name;
     }
 
     // 其他方法
