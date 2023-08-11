@@ -8,6 +8,7 @@ import com.example.demo.entity.request.LoginRequest;
 import com.example.demo.entity.response.GetUserResponse;
 import com.example.demo.entity.response.LoginResponse;
 import com.example.demo.entity.result.RegistrationRequestResult;
+import com.example.demo.entity.util.JwtUtil;
 import com.example.demo.repository.RegistrationRequestRepository;
 import com.example.demo.repository.RegistrationRequestResultRepository;
 import com.example.demo.repository.UserRepository;
@@ -36,7 +37,7 @@ public class UserServiceImpl implements UserService {
         this.registrationRequestResultRepository=registrationRequestResultRepository;
     }
     @Override
-    public UserRegisterResponse registerUser(RegistrationRequest request )throws UsernameExistException {
+    public UserRegisterResponse registerUser(RegistrationRequest request)throws UsernameExistException {
         //存储注册请求
         request.setCreatedOn(LocalDateTime.now());
         request.setStatus(0);
@@ -45,10 +46,12 @@ public class UserServiceImpl implements UserService {
         // 检查用户名是否已存在
         if (userRepository.findByUsername(request.getUsername()) != null) {
             // 用户名已存在，可以抛出一个自定义的异常或进行其他处理
+            registrationRequestRepository.updateStatusById(-1,request.getId());//失败 status改为-1
             throw new UsernameExistException("Username already exists");
         }
+        registrationRequestRepository.updateStatusById(1,request.getId());//成功 status改为1
         //存储用户信息
-        User user = new User(request.getUsername(),request.getPassword());
+        User user = new User(request.getUsername(),request.getPassword(),request.getDisplay_name());
         // 保存用户到数据库
         userRepository.save(user);
 
@@ -75,6 +78,7 @@ public class UserServiceImpl implements UserService {
         LoginResponse response = new LoginResponse();
         response.setId(user.getId());
         response.setLast_accessed(user.getLastAccessed());
+        response.setToken(JwtUtil.generateToken(user.getUsername(), 1800000));
         return response;
     }
 
