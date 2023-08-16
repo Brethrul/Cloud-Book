@@ -1,71 +1,74 @@
 package com.example.demo.entity;
 
-import jakarta.persistence.*;
 
-import java.time.LocalDateTime;
+import com.example.demo.utils.HashService;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
-@Entity
-@Table(name = "document")
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Data
+class Cell {
+    private String userid;
+
+    private boolean isusing;
+
+    private String context;
+}
+@Data
 public class Document {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
-    @Column(name = "doc_name")
-    private String docName;
-    @Column(name = "created_on")
-    private LocalDateTime createdOn;
-    @Column(name = "last_accessed")
-    private LocalDateTime lastAccessed;
-    @Column(name = "status")
-    private int status;// 1:created 0:deleted
-    public Document(String docName){
-        this.docName=docName;
-        this.createdOn=LocalDateTime.now();
-        this.lastAccessed=LocalDateTime.now();
-        this.status=1;
+    private String name;
+
+    private List<List<Cell>> document;
+
+    private static HashService hashService = new HashService();
+
+    public Document(String name,int rows,int cols)
+    {
+        this.name = name;
+
+        for(int i=0;i < rows;i++)
+        {
+            List<Cell>currentRow = new ArrayList<>();
+            for(int j=0;j < cols;j++)
+            {
+                Cell nowCell = new Cell();
+                currentRow.add(nowCell);
+            }
+            this.document.add(currentRow);
+        }
+    }
+    public static String saveDocument(Document document,String docname,String username)
+    {
+        String filename = hashService.hashString(username+docname);
+        //序列化
+        try {
+            FileOutputStream fileOut = new FileOutputStream("~/DocmentFile/"+filename+".ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(document);
+            out.close();
+            fileOut.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return filename;
     }
 
-    public Document() {
-
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getDocName() {
-        return docName;
-    }
-
-    public void setDocName(String docName) {
-        this.docName = docName;
-    }
-
-    public LocalDateTime getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    public LocalDateTime getLastAccessed() {
-        return lastAccessed;
-    }
-
-    public void setLastAccessed(LocalDateTime lastAccessed) {
-        this.lastAccessed = lastAccessed;
-    }
-
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public static Document loadDocument(String filename) {
+        // 反序列化
+        Document deserializedDocument = null;
+        try {
+            FileInputStream fileIn = new FileInputStream("~/DocmentFile/" + filename + ".ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            deserializedDocument = (Document) in.readObject();
+            in.close();
+            fileIn.close();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return deserializedDocument;
     }
 }
