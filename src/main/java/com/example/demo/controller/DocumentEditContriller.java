@@ -50,7 +50,6 @@ public class DocumentEditContriller {
             webSocketSet.put(filename,newList);
         }
         //发送数据结构
-        session.getBasicRemote().sendText("hello");
         Document curDoc = Document.loadDocument(filename);
         ObjectMapper objectMapper = new ObjectMapper();
         String docmessage = objectMapper.writeValueAsString(curDoc);
