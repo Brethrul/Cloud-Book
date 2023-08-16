@@ -13,18 +13,21 @@ public class DocumentRequest {
     @Column(name = "user_id")
     private int user_id;
     @Column(name = "operation_type")
-    private int operation_type;// 0:creat 1:delete 2:share
+    private int operation_type;// 0:creat 1:delete 10:shareOut 11:shareIn
     @Column(name = "doc_name",columnDefinition = "json")
     private String doc_name;
     @Column(name = "created_on")
     private LocalDateTime created_on;
     @Column(name = "status")
     private int status;// 1:Enabled 1:Disabled
-    public DocumentRequest(String doc_name){//创建用构造函数
+    @Column(name = "doc_id")
+    private int doc_id;
+    public DocumentRequest(String doc_name,int doc_id,int operation_type){//创建用构造函数
         this.doc_name=doc_name;
         this.created_on=LocalDateTime.now();
+        this.doc_id=doc_id;
         this.status=1;
-        this.operation_type=0;
+        this.operation_type=operation_type;
     }
 
     public DocumentRequest() {
@@ -77,5 +80,13 @@ public class DocumentRequest {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public int getDoc_id() {
+        return doc_id;
+    }
+
+    public void setDoc_id(int doc_id) {
+        this.doc_id = doc_id;
     }
 }
