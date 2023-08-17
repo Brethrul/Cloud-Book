@@ -91,10 +91,12 @@ public class Document {
     public void setStatus(int status) {
         this.status = status;
     }
-    public Document(String name,int rows,int cols)
+    public Document(String name,int rows,int cols,String username)
     {
         this.docName = name;
-
+        this.createdOn=LocalDateTime.now();
+        this.lastAccessed=LocalDateTime.now();
+        this.status=1;
         for(int i=0;i < rows;i++)
         {
             List<Cell>currentRow = new ArrayList<>();
@@ -105,13 +107,14 @@ public class Document {
             }
             this.document.add(currentRow);
         }
+        this.fileName=saveDocument(this,docName,username);
     }
     public static String saveDocument(Document document,String docname,String username)
     {
         String filename = hashService.hashString(username+docname);
         //序列化
         try {
-            FileOutputStream fileOut = new FileOutputStream("~/DocmentFile/"+filename+".ser");
+            FileOutputStream fileOut = new FileOutputStream("~/origin/master/demo/DocumentFile/"+filename+".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(document);
             out.close();
