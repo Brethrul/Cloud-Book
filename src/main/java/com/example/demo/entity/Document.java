@@ -114,7 +114,7 @@ public class Document implements Serializable {
         String filename = hashService.hashString(username+docname);
         //序列化
         try {
-            FileOutputStream fileOut = new FileOutputStream("/CD_Proj/DocumentFile/"+filename+".ser");
+            FileOutputStream fileOut = new FileOutputStream("/home/user/CD_Proj/DocumentFile/"+filename+".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(document);
             out.close();
