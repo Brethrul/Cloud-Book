@@ -49,9 +49,10 @@ public class DocumentServiceImpl implements DocumentService {
         List<Permission> permissions = permissionsRepository.findByUserId(userId);
         for (Permission permission:permissions ) {
             Document document=permission.getDocument();
+            if(document.getStatus()!=0){
             responses.add(new GetDocumentResponse(document.getId(),document.getDocName(),document.getCreatedOn(),
                                                   document.getLastAccessed(),document.getStatus(),permission.getPermissionType()));
-        }
+        }}
         return responses;
     }
 
