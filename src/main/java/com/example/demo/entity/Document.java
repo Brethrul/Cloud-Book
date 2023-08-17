@@ -91,7 +91,12 @@ public class Document implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-    public Document(String name,int rows,int cols,String username)
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public Document(String name, int rows, int cols, String username)
     {
         this.docName = name;
         this.createdOn=LocalDateTime.now();

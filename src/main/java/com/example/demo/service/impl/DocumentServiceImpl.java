@@ -51,7 +51,7 @@ public class DocumentServiceImpl implements DocumentService {
             Document document=permission.getDocument();
             if(document.getStatus()!=0){
             responses.add(new GetDocumentResponse(document.getId(),document.getDocName(),document.getCreatedOn(),
-                                                  document.getLastAccessed(),document.getStatus(),permission.getPermissionType()));
+                                                  document.getLastAccessed(),document.getStatus(),permission.getPermissionType(),document.getFileName()));
         }}
         return responses;
     }

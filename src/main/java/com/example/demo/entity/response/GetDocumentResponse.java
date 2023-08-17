@@ -9,14 +9,16 @@ public class GetDocumentResponse {
     private LocalDateTime last_accessed;
     private int status;
     private int permission_type;
+    private String hashName;
     public GetDocumentResponse(int doc_id,String doc_name,LocalDateTime created_on,
-                                LocalDateTime last_accessed,int status,int permission_type){
+                                LocalDateTime last_accessed,int status,int permission_type,String hashName){
         this.doc_id=doc_id;
         this.doc_name=doc_name;
         this.created_on=created_on;
         this.last_accessed=last_accessed;
         this.status=status;
         this.permission_type=permission_type;
+        this.hashName=hashName;
     }
 
     public int getDoc_id() {
