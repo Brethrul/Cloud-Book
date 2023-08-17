@@ -9,5 +9,8 @@ class DemoApplicationTests {
     @Test
     void contextLoads() {
     }
+    @Test
+    void documentCreate(){
 
+    }
 }

@@ -43,17 +43,20 @@ public class DocumentEditContriller {
         this.session = session;
         this.filename = filename;
         // fimename是用来表示唯一文件，如果需要指定发送，需要指定发送通过filename来区分
-        if(webSocketSet.containsKey(filename)) webSocketSet.get(filename).add(this);
+        if(webSocketSet.containsKey(filename)) {
+            webSocketSet.get(filename).add(this);
+            AppointSending(filename,"{new_user: 1}");
+        }
         else {
             List<DocumentEditContriller> newList = new ArrayList<>();
             newList.add(this);
             webSocketSet.put(filename,newList);
+            //发送数据结构
+            Document curDoc = Document.loadDocument(filename);
+            ObjectMapper objectMapper = new ObjectMapper();
+            String docmessage = objectMapper.writeValueAsString(curDoc);
+            AppointSending(filename,docmessage);
         }
-        //发送数据结构
-        Document curDoc = Document.loadDocument(filename);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String docmessage = objectMapper.writeValueAsString(curDoc);
-        AppointSending(filename,docmessage);
     }
 
     /**
