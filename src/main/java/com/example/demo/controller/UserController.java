@@ -40,7 +40,7 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, ex.getMessage());
         }
     }
-    @GetMapping(value = "/login", produces = "application/json")
+    @PostMapping(value = "/login", produces = "application/json")
     public ResponseEntity<LoginResponse> loginUser(@RequestBody LoginRequest request) {
 
         try{

@@ -1,6 +1,7 @@
 package com.example.demo.entity;
+import jakarta.persistence.*;
 
-
+import java.time.LocalDateTime;
 import com.example.demo.utils.HashService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,21 +14,86 @@ import java.util.List;
 class Cell {
     private String userid;
 
-    private boolean isusing;
+    private String displayName;
+
+    private boolean isUsing;
 
     private String context;
 }
 @Data
+@Entity
+@Table(name = "document")
 public class Document {
-    private String name;
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    @Column(name = "doc_name")
+    private String docName;
+    @Column(name = "created_on")
+    private LocalDateTime createdOn;
+    @Column(name = "last_accessed")
+    private LocalDateTime lastAccessed;
+    @Column(name = "status")
+    private int status;// 1:created 0:deleted
+    @Transient
     private List<List<Cell>> document;
-
+    @Transient
     private static HashService hashService = new HashService();
+    @Column(name = "fileName")
+    private String fileName;
+    public Document(String docName){
+        this.docName=docName;
+        this.createdOn=LocalDateTime.now();
+        this.lastAccessed=LocalDateTime.now();
+        this.status=1;
+    }
 
+    public Document() {
+
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getDocName() {
+        return docName;
+    }
+
+    public void setDocName(String docName) {
+        this.docName = docName;
+    }
+
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
+    }
+
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    public LocalDateTime getLastAccessed() {
+        return lastAccessed;
+    }
+
+    public void setLastAccessed(LocalDateTime lastAccessed) {
+        this.lastAccessed = lastAccessed;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
     public Document(String name,int rows,int cols)
     {
-        this.name = name;
+        this.docName = name;
 
         for(int i=0;i < rows;i++)
         {
@@ -71,4 +137,5 @@ public class Document {
         }
         return deserializedDocument;
     }
+
 }
