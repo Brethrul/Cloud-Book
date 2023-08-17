@@ -62,7 +62,7 @@ public class DocumentServiceImpl implements DocumentService {
         request.setOperation_type(0);//creat
         request.setStatus(1);
         //存储新文档
-        Document document = new Document(request.getDoc_name(),26,26,userRepository.findById(request.getUser_id()).getUsername());
+        Document document = new Document(request.getDoc_name(),5,5,userRepository.findById(request.getUser_id()).getUsername());
         documentRepository.save(document);
 
         request.setDoc_id(document.getId());

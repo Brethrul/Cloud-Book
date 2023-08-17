@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Data
-class Cell {
+class Cell implements Serializable{
     private String userid;
 
     private String displayName;
@@ -23,7 +23,7 @@ class Cell {
 @Data
 @Entity
 @Table(name = "document")
-public class Document {
+public class Document implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -36,10 +36,10 @@ public class Document {
     @Column(name = "status")
     private int status;// 1:created 0:deleted
     @Transient
-    private List<List<Cell>> document;
+    private List<List<Cell>> document = new ArrayList<>();
     @Transient
     private static HashService hashService = new HashService();
-    @Column(name = "fileName")
+    @Column(name = "filename")
     private String fileName;
     public Document(String docName){
         this.docName=docName;
@@ -114,7 +114,7 @@ public class Document {
         String filename = hashService.hashString(username+docname);
         //序列化
         try {
-            FileOutputStream fileOut = new FileOutputStream("~/origin/master/demo/DocumentFile/"+filename+".ser");
+            FileOutputStream fileOut = new FileOutputStream("~/origin/"+filename+".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(document);
             out.close();
@@ -130,7 +130,7 @@ public class Document {
         // 反序列化
         Document deserializedDocument = null;
         try {
-            FileInputStream fileIn = new FileInputStream("~/DocmentFile/" + filename + ".ser");
+            FileInputStream fileIn = new FileInputStream("~/origin/" + filename + ".ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             deserializedDocument = (Document) in.readObject();
             in.close();
