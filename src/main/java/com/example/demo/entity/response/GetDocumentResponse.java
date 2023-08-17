@@ -68,4 +68,12 @@ public class GetDocumentResponse {
     public void setPermission_type(int permission_type) {
         this.permission_type = permission_type;
     }
+
+    public String getHashName() {
+        return hashName;
+    }
+
+    public void setHashName(String hashName) {
+        this.hashName = hashName;
+    }
 }
