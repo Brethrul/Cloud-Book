@@ -49,9 +49,10 @@ public class DocumentServiceImpl implements DocumentService {
         List<Permission> permissions = permissionsRepository.findByUserId(userId);
         for (Permission permission:permissions ) {
             Document document=permission.getDocument();
+            if(document.getStatus()!=0){
             responses.add(new GetDocumentResponse(document.getId(),document.getDocName(),document.getCreatedOn(),
-                                                  document.getLastAccessed(),document.getStatus(),permission.getPermissionType()));
-        }
+                                                  document.getLastAccessed(),document.getStatus(),permission.getPermissionType(),document.getFileName()));
+        }}
         return responses;
     }
 
@@ -62,7 +63,7 @@ public class DocumentServiceImpl implements DocumentService {
         request.setOperation_type(0);//creat
         request.setStatus(1);
         //存储新文档
-        Document document = new Document(request.getDoc_name());
+        Document document = new Document(request.getDoc_name(),5,5,userRepository.findById(request.getUser_id()).getUsername());
         documentRepository.save(document);
 
         request.setDoc_id(document.getId());
