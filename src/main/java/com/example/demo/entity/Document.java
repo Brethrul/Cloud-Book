@@ -114,7 +114,7 @@ public class Document implements Serializable {
         String filename = hashService.hashString(username+docname);
         //序列化
         try {
-            FileOutputStream fileOut = new FileOutputStream("~/origin/"+filename+".ser");
+            FileOutputStream fileOut = new FileOutputStream("~/CD_Proj/DocumentFile/"+filename+".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(document);
             out.close();
@@ -130,7 +130,7 @@ public class Document implements Serializable {
         // 反序列化
         Document deserializedDocument = null;
         try {
-            FileInputStream fileIn = new FileInputStream("~/origin/" + filename + ".ser");
+            FileInputStream fileIn = new FileInputStream("~/CD_Proj/DocumentFile/" + filename + ".ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             deserializedDocument = (Document) in.readObject();
             in.close();
