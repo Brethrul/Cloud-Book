@@ -64,15 +64,15 @@ public class DocumentEditContriller {
     /**
      * 连接关闭调用的方法
      */
-    @OnClose
-    public void OnClose(){
-        if(webSocketSet.get(this.filename).contains(this.session))
-            webSocketSet.get(this.filename).remove(this.session);
-        if(webSocketSet.get(this.filename).size() == 0)
-            webSocketSet.remove(this.filename);
-
-
-    }
+//    @OnClose
+//    public void OnClose(){
+//        if(webSocketSet.get(this.filename).contains(this.session))
+//            webSocketSet.get(this.filename).remove(this.session);
+//        if(webSocketSet.get(this.filename).size() == 0)
+//            webSocketSet.remove(this.filename);
+//
+//
+//    }
 
     /**
      * 收到客户端消息后调用的方法
