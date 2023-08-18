@@ -37,7 +37,7 @@ public class Document implements Serializable {
     private int status;// 1:created 0:deleted
     @Transient
     private List<List<Cell>> document = new ArrayList<>();
-
+    @Transient
     private static HashService hashService = new HashService();
     @Column(name = "filename")
     private String fileName;
@@ -119,7 +119,7 @@ public class Document implements Serializable {
         String filename = hashService.hashString(username+docname);
         //序列化
         try {
-            FileOutputStream fileOut = new FileOutputStream(filename+".ser");
+            FileOutputStream fileOut = new FileOutputStream("/home/git/CD_Proj/DocumentFile/"+filename+".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(document);
             out.close();
@@ -135,7 +135,7 @@ public class Document implements Serializable {
         // 反序列化
         Document deserializedDocument = null;
         try {
-            FileInputStream fileIn = new FileInputStream("/Users/huxuejian/Documents/CD_Proj/DocumentFile/"+filename+".ser");
+            FileInputStream fileIn = new FileInputStream("/home/git/CD_Proj/DocumentFile/" + filename + ".ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             deserializedDocument = (Document) in.readObject();
             in.close();
