@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Document;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import jakarta.websocket.*;
 import jakarta.websocket.server.PathParam;
 import jakarta.websocket.server.ServerEndpoint;
@@ -44,8 +45,8 @@ public class DocumentEditContriller {
         this.filename = filename;
         // fimename是用来表示唯一文件，如果需要指定发送，需要指定发送通过filename来区分
         if(webSocketSet.containsKey(filename)) {
-            webSocketSet.get(filename).add(this);
             AppointSending(filename,"{new_user: 1}");
+            webSocketSet.get(filename).add(this);
         }
         else {
             List<DocumentEditContriller> newList = new ArrayList<>();
@@ -54,6 +55,7 @@ public class DocumentEditContriller {
             //发送数据结构
             Document curDoc = Document.loadDocument(filename);
             ObjectMapper objectMapper = new ObjectMapper();
+            objectMapper.registerModule(new JavaTimeModule());
             String docmessage = objectMapper.writeValueAsString(curDoc);
             AppointSending(filename,docmessage);
         }
