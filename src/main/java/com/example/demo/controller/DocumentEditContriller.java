@@ -102,8 +102,11 @@ public class DocumentEditContriller {
      */
     public void AppointSending(String filename,String message){
         try {
-            for(DocumentEditContriller nowDoc : webSocketSet.get(filename))
-                nowDoc.session.getBasicRemote().sendText(message);
+            if(message == "{new_user: 1}")
+                webSocketSet.get(filename).get(0).session.getBasicRemote().sendText(message);
+            else
+                for(DocumentEditContriller nowDoc : webSocketSet.get(filename))
+                    nowDoc.session.getBasicRemote().sendText(message);
         }catch (Exception e){
             e.printStackTrace();
         }
