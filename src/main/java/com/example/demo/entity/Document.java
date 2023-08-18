@@ -35,9 +35,9 @@ public class Document implements Serializable {
     private LocalDateTime lastAccessed;
     @Column(name = "status")
     private int status;// 1:created 0:deleted
-    @Transient
+
     private List<List<Cell>> document = new ArrayList<>();
-    @Transient
+
     private static HashService hashService = new HashService();
     @Column(name = "filename")
     private String fileName;
