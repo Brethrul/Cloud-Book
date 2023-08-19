@@ -101,15 +101,16 @@ public class DocumentEditContriller {
      */
     @OnMessage
     public void OnMessage(String message_str){
-
-        AppointSending(this.filename,message_str);
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            Document curDoc = objectMapper.readValue(message_str, Document.class);
-            allDocument.put(this.filename,curDoc);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if(message_str.charAt(0) == '[')
+            AppointSending(this.filename,message_str);
+        else if(message_str.charAt(0) == '{')
+            try {
+                ObjectMapper objectMapper = new ObjectMapper();
+                Document curDoc = objectMapper.readValue(message_str, Document.class);
+                allDocument.put(this.filename,curDoc);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
     }
 
     /**
