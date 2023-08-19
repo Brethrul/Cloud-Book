@@ -80,6 +80,7 @@ public class DocumentEditContriller {
         }
         if(webSocketSet.get(this.filename).size() == 0) {
             webSocketSet.remove(this.filename);
+            allDocument.remove(this.filename);
             try {
                 //这里需要改成文档的保存路径
                 FileOutputStream fileOut = new FileOutputStream(this.filename+".ser");
