@@ -83,7 +83,7 @@ public class DocumentEditContriller {
 
             try {
                 //这里需要改成文档的保存路径
-                FileOutputStream fileOut = new FileOutputStream(this.filename+".ser");
+                FileOutputStream fileOut = new FileOutputStream("/home/git/CD_Proj/DocumentFile/"+filename+".ser");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(allDocument.get(this.filename));
                 out.close();
@@ -111,7 +111,7 @@ public class DocumentEditContriller {
                 allDocument.put(this.filename,curDoc);
 
                 //这里需要改成文档的保存路径
-                FileOutputStream fileOut = new FileOutputStream(this.filename+".ser");
+                FileOutputStream fileOut = new FileOutputStream("/home/git/CD_Proj/DocumentFile/"+filename+".ser");
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);
                 out.writeObject(allDocument.get(this.filename));
                 out.close();
