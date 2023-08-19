@@ -108,6 +108,7 @@ public class DocumentEditContriller {
                 ObjectMapper objectMapper = new ObjectMapper();
                 Document curDoc = objectMapper.readValue(message_str, Document.class);
                 allDocument.put(this.filename,curDoc);
+                AppointSending(this.filename,message_str);
             } catch (Exception e) {
                 e.printStackTrace();
             }
