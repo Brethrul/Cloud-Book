@@ -80,7 +80,7 @@ public class DocumentEditContriller {
         }
         if(webSocketSet.get(this.filename).size() == 0) {
             webSocketSet.remove(this.filename);
-            allDocument.remove(this.filename);
+
             try {
                 //这里需要改成文档的保存路径
                 FileOutputStream fileOut = new FileOutputStream(this.filename+".ser");
@@ -92,6 +92,7 @@ public class DocumentEditContriller {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            allDocument.remove(this.filename);
         }
 
     }
@@ -108,6 +109,14 @@ public class DocumentEditContriller {
                 ObjectMapper objectMapper = new ObjectMapper();
                 Document curDoc = objectMapper.readValue(message_str, Document.class);
                 allDocument.put(this.filename,curDoc);
+
+                //这里需要改成文档的保存路径
+                FileOutputStream fileOut = new FileOutputStream(this.filename+".ser");
+                ObjectOutputStream out = new ObjectOutputStream(fileOut);
+                out.writeObject(allDocument.get(this.filename));
+                out.close();
+                fileOut.close();
+
                 AppointSending(this.filename,message_str);
             } catch (Exception e) {
                 e.printStackTrace();
