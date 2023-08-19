@@ -3,6 +3,7 @@ import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import com.example.demo.utils.HashService;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
